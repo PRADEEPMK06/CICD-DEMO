@@ -26,13 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Deploying application..."
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - run: echo "Deploying application..."
-
   notify:
     needs: deploy
     runs-on: ubuntu-latest
