@@ -1,5 +1,6 @@
 name: Daily Test Build Deploy
 on:
+  workflow_dispatch:
   schedule:
     - cron: '45 9 * * *'
 jobs:
