@@ -1,7 +1,7 @@
 name: Daily Test Build Deploy
 on:
   schedule:
-    - cron: '34 9 * * *'
+    - cron: '45 9 * * *'
 jobs:
   test:
     runs-on: ubuntu-latest
