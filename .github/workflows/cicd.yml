@@ -26,3 +26,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Deploying application..."
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "Deploying application..."
+
+  notify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: Daily CI/CD Pipeline Status
+          to: pradeepmk799@gmail.com
+          from: GitHub Actions
+          body: |
+            Daily CI/CD Pipeline Completed Successfully.
+            ✓ Test Stage Completed
+            ✓ Build Stage Completed
+            ✓ Deploy Stage Completed
+            Execution Time: 3:00 PM IST
+            Repository: CICD-DEMO
