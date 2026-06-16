@@ -4,33 +4,35 @@ on:
   push:
     branches:
       - main
-  schedule:
-    - cron: '30 9 * * *'
-
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  test:
 
+  test:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
 
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+      - run: pip install -r requirements.txt
 
-      - name: Run Tests
-        run: |
-          pytest
+      - run: pytest
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: echo "Building Application..."
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "Deploying Application..."
